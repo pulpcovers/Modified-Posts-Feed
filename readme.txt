@@ -2,7 +2,7 @@
 Contributors: pulpcovers
 Tags: rss, feed, modified posts, updated posts, syndication
 Requires at least: 5.0
-Tested up to: 6.9.4
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 1.0.1
 License: CC0-1.0
@@ -100,6 +100,7 @@ This is optional but recommended for high‑traffic or large‑content sites.
 
 = 1.0.1 =
 Recommended update. Adds settings page, caching, and performance improvements.
+
 
 
 

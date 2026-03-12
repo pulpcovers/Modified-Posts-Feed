@@ -965,7 +965,7 @@ function modified_posts_feed_add_index() {
     // Direct database query required because WordPress provides no API
     // for inspecting table indexes.
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-    $index_exists = $wpdb->get_var(
+    $index_exists = (bool) $wpdb->get_var(
         "SHOW INDEX FROM {$wpdb->posts} WHERE Key_name = 'post_modified'"
     );
 
@@ -991,12 +991,11 @@ function modified_posts_feed_add_index() {
  */
 function modified_posts_feed_remove_index() {
     global $wpdb;
-
     // Check if index exists.
     // Direct database query required because WordPress provides no API
     // for inspecting table indexes.
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-        $index_exists = $wpdb->get_var(
+    $index_exists = (bool) $wpdb->get_var(
         "SHOW INDEX FROM {$wpdb->posts} WHERE Key_name = 'post_modified'"
     );
 

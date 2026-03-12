@@ -244,13 +244,13 @@ class Modified_Posts_Feed {
     <atom:link href="<?php echo esc_url($feed_url); ?>" rel="self" type="application/rss+xml" />
     <link><?php echo esc_url($home_url); ?></link>
     <description><?php echo esc_html($site_description); ?> - Recently Modified Posts</description>
-    <?php if ($last_modified) : ?>
-    <?php
+    <?php if ( $last_modified ) : ?>
+        <?php
         // Date output must remain unescaped for valid RSS formatting.
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    ?>
-    <lastBuildDate><?php echo mysql2date('D, d M Y H:i:s +0000', $last_modified, false); ?></lastBuildDate>
-<?php endif; ?>
+        echo '<lastBuildDate>' . mysql2date( 'D, d M Y H:i:s +0000', $last_modified, false ) . '</lastBuildDate>';
+        ?>
+    <?php endif; ?>
     <language><?php echo esc_html($language); ?></language>
     <sy:updatePeriod><?php echo esc_html($update_period); ?></sy:updatePeriod>
     <sy:updateFrequency><?php echo esc_html($update_frequency); ?></sy:updateFrequency>
@@ -272,22 +272,21 @@ class Modified_Posts_Feed {
         <item>
             <title><?php the_title_rss(); ?></title>
             <link><?php the_permalink_rss(); ?></link>
-            <?php
-            // RSS date must remain unescaped.
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    ?>
-            <pubDate><?php echo $pub_date; ?></pubDate>
+        <?php
+        // RSS date must remain unescaped.
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<pubDate>' . $pub_date . '</pubDate>';
+        ?>
 
-    <?php
+        <?php
         // RSS modified date must remain unescaped.
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    ?>
-            <dc:modified><?php echo $mod_date; ?></dc:modified>
-            <dc:creator><![CDATA[<?php the_author(); ?>]]></dc:creator>
-            <?php the_category_rss('rss2'); ?>
-            <guid isPermaLink="false"><?php the_guid(); ?></guid>
-            
-            <?php
+        echo '<dc:modified>' . $mod_date . '</dc:modified>';
+        ?>
+        <dc:creator><![CDATA[<?php the_author(); ?>]]></dc:creator>
+        <?php the_category_rss('rss2'); ?>
+        <guid isPermaLink="false"><?php the_guid(); ?></guid>
+        <?php
             // Featured image support
             if ($this->show_featured_images && has_post_thumbnail($post_id)) {
                 $thumbnail_id = get_post_thumbnail_id($post_id);

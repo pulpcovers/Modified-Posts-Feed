@@ -3,7 +3,7 @@
  * Plugin Name: Modified Posts Feed
  * Plugin URI: https://github.com/pulpcovers/Modified-Posts-Feed
  * Description: Generates an RSS feed of recently modified posts, ordered by last modified date
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: PulpCovers.com
  * Author URI: https://pulpcovers.com
  * License: CC0-1.0
@@ -57,6 +57,7 @@ class Modified_Posts_Feed {
             add_action('admin_menu', array($this, 'add_settings_page'));
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_init', array($this, 'register_cache_clear_hooks'));
+            add_action('admin_init', array($this, 'maybe_flush_rewrite_rules'));
         }
     }
     
@@ -66,6 +67,16 @@ class Modified_Posts_Feed {
     public function init_feed() {
         $this->load_settings();
         add_feed($this->feed_slug, array($this, 'generate_feed'));
+    }
+    
+    /**
+     * Flush rewrite rules if needed after activation
+     */
+    public function maybe_flush_rewrite_rules() {
+        if (get_transient('modified_posts_feed_flush_rewrite_rules')) {
+            flush_rewrite_rules();
+            delete_transient('modified_posts_feed_flush_rewrite_rules');
+        }
     }
     
     /**
@@ -477,7 +488,7 @@ class Modified_Posts_Feed {
         // Trigger rewrite flush if slug changed
         $old_slug = get_option('modified_posts_feed_slug', 'modified-posts');
         if ($old_slug !== $slug) {
-            flush_rewrite_rules();
+            set_transient('modified_posts_feed_flush_rewrite_rules', true, 60);
         }
         return $slug;
     }
@@ -787,7 +798,8 @@ function modified_posts_feed_activate() {
         return;
     }
     
-    flush_rewrite_rules();
+    // Set flag to flush rewrite rules on next admin page load
+    set_transient('modified_posts_feed_flush_rewrite_rules', true, 60);
     
     // Clear cache for all sites in network
     if (is_multisite()) {
@@ -857,6 +869,7 @@ function modified_posts_feed_uninstall() {
             $remove_index = get_option('modified_posts_feed_remove_index_on_uninstall', false);
             
             delete_transient('modified_posts_feed_output_' . $site->blog_id);
+            delete_transient('modified_posts_feed_flush_rewrite_rules');
             delete_option('modified_posts_feed_slug');
             delete_option('modified_posts_feed_posts_per_page');
             delete_option('modified_posts_feed_post_types');
@@ -880,6 +893,7 @@ function modified_posts_feed_uninstall() {
         
         // Clean up transients
         delete_transient('modified_posts_feed_output_' . get_current_blog_id());
+        delete_transient('modified_posts_feed_flush_rewrite_rules');
         
         // Clean up all options
         delete_option('modified_posts_feed_slug');

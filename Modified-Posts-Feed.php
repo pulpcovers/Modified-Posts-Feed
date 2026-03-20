@@ -642,10 +642,16 @@ if ( ! $index_action_performed ) {
             
             <div class="notice notice-info">
                 <p>
-                    <strong>Your feed URL:</strong> 
-                    <a href="<?php echo esc_url($feed_url); ?>" target="_blank"><?php echo esc_html($feed_url); ?></a>
-                    <button type="button" class="button button-small" onclick="navigator.clipboard.writeText(<?php echo wp_json_encode($feed_url); ?>); this.innerText='Copied!';" style="margin-left: 10px;">Copy URL</button>
-                </p>
+					<strong>Your feed URL:</strong>
+					<a href="<?php echo esc_url($feed_url); ?>" target="_blank"><?php echo esc_html($feed_url); ?></a>
+					<button type="button" 
+							class="button button-small" 
+							data-feed-url="<?php echo esc_attr($feed_url); ?>" 
+							onclick="navigator.clipboard.writeText(this.dataset.feedUrl); this.innerText='Copied!';" 
+							style="margin-left: 10px;">
+						Copy URL
+					</button>
+				</p>
                 <p>
                     <strong>Database Index Status:</strong> 
                     <?php if ($index_exists) : ?>

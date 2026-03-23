@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Modified Posts Feed
- * Plugin URI: https://github.com/pulpcovers/Modified-Posts-Feed
- * Description: Generates an RSS feed of recently modified posts, ordered by last modified date
+ * Plugin Name: Pulpcovers Modified Posts Feed
+ * Plugin URI: https://pulpcovers.com/
+ * Description: Creates a dedicated RSS feed of recently modified posts, ordered by last modified date.
  * Version: 1.0.1
- * Author: PulpCovers.com
- * Author URI: https://pulpcovers.com
- * License: CC0-1.0
- * Text Domain: modified-posts-feed
+ * Author: Pulpcovers
+ * Author URI: https://pulpcovers.com/
+ * Text Domain: pulpcovers-modified-posts-feed
+ * Domain Path: /languages
  */
 
 // Prevent direct access
@@ -340,7 +340,7 @@ class Modified_Posts_Feed {
             'Modified Posts Feed Settings',
             'Modified Posts Feed',
             'manage_options',
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             array($this, 'render_settings_page')
         );
     }
@@ -412,14 +412,14 @@ class Modified_Posts_Feed {
             'modified_posts_feed_feed_settings',
             'Feed Settings',
             array($this, 'render_feed_section_info'),
-            'modified-posts-feed'
+            'pulpcovers-modified-posts-feed'
         );
         
         add_settings_field(
             'modified_posts_feed_slug',
             'Feed URL Slug',
             array($this, 'render_slug_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_feed_settings'
         );
         
@@ -427,7 +427,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_posts_per_page',
             'Posts Per Page',
             array($this, 'render_posts_per_page_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_feed_settings'
         );
         
@@ -435,7 +435,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_post_types',
             'Post Types',
             array($this, 'render_post_types_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_feed_settings'
         );
         
@@ -443,7 +443,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_show_images',
             'Featured Images',
             array($this, 'render_show_images_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_feed_settings'
         );
         
@@ -452,14 +452,14 @@ class Modified_Posts_Feed {
             'modified_posts_feed_cache_settings',
             'Cache Settings',
             array($this, 'render_cache_section_info'),
-            'modified-posts-feed'
+            'pulpcovers-modified-posts-feed'
         );
         
         add_settings_field(
             'modified_posts_feed_cache_enabled',
             'Enable Caching',
             array($this, 'render_cache_enabled_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_cache_settings'
         );
         
@@ -467,7 +467,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_cache_duration',
             'Cache Duration',
             array($this, 'render_cache_duration_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_cache_settings'
         );
         
@@ -476,14 +476,14 @@ class Modified_Posts_Feed {
             'modified_posts_feed_index_settings',
             'Database Index Settings',
             array($this, 'render_index_section_info'),
-            'modified-posts-feed'
+            'pulpcovers-modified-posts-feed'
         );
         
         add_settings_field(
             'modified_posts_feed_add_index',
             'Add Index on Activation',
             array($this, 'render_add_index_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_index_settings'
         );
         
@@ -491,7 +491,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_remove_index_on_deactivate',
             'Remove Index on Deactivation',
             array($this, 'render_remove_deactivate_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_index_settings'
         );
         
@@ -499,7 +499,7 @@ class Modified_Posts_Feed {
             'modified_posts_feed_remove_index_on_uninstall',
             'Remove Index on Uninstall',
             array($this, 'render_remove_uninstall_field'),
-            'modified-posts-feed',
+            'pulpcovers-modified-posts-feed',
             'modified_posts_feed_index_settings'
         );
     }
@@ -667,7 +667,7 @@ if ( ! $index_action_performed ) {
             <form action="options.php" method="post">
                 <?php
                 settings_fields('modified_posts_feed_settings');
-                do_settings_sections('modified-posts-feed');
+                do_settings_sections('pulpcovers-modified-posts-feed');
                 submit_button('Save Settings');
                 ?>
             </form>

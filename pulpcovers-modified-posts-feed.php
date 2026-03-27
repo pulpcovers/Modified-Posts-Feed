@@ -79,6 +79,26 @@ class Pulpcovers_Modified_Posts_Feed {
     }
     
     /**
+     * Check if the database index exists
+     * @return bool True if index exists, false otherwise.
+     */
+    public function index_exists() {
+        global $wpdb;
+        $table = $wpdb->posts;
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $index_exists = $wpdb->get_results(
+            $wpdb->prepare(
+                "SHOW INDEX FROM %i WHERE Key_name = %s",
+                $table,
+                'modified_posts_feed_idx'
+            )
+        );
+        
+        return ! empty( $index_exists );
+    }
+    
+    /**
      * Render the RSS feed
      */
     public function render_feed() {
@@ -305,10 +325,54 @@ class Pulpcovers_Modified_Posts_Feed {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e( 'Add Database Index', 'pulpcovers-modified-posts-feed' ); ?></th>
+                        <th scope="row"><?php esc_html_e( 'Database Index', 'pulpcovers-modified-posts-feed' ); ?></th>
                         <td>
-                            <input type="checkbox" name="modified_posts_feed_index_enabled" value="1" <?php checked( get_option( 'modified_posts_feed_index_enabled', false ) ); ?> />
-                            <p class="description"><?php esc_html_e( 'Adds an index on post_modified for performance. Recommended for sites with many posts.', 'pulpcovers-modified-posts-feed' ); ?></p>
+                            <?php
+                            $index_exists    = $this->index_exists();
+                            $option_enabled  = get_option( 'modified_posts_feed_index_enabled', false );
+                            $status_mismatch = ( $index_exists && ! $option_enabled ) || ( ! $index_exists && $option_enabled );
+                            ?>
+                            
+                            <fieldset>
+                                <legend class="screen-reader-text">
+                                    <span><?php esc_html_e( 'Database Index', 'pulpcovers-modified-posts-feed' ); ?></span>
+                                </legend>
+                                
+                                <label>
+                                    <input type="checkbox" name="modified_posts_feed_index_enabled" value="1" <?php checked( $option_enabled ); ?> />
+                                    <?php esc_html_e( 'Enable database index on post_modified column', 'pulpcovers-modified-posts-feed' ); ?>
+                                </label>
+                                
+                                <p class="description">
+                                    <?php esc_html_e( 'Adds a database index to improve query performance. Recommended for sites with many posts.', 'pulpcovers-modified-posts-feed' ); ?>
+                                </p>
+                                
+                                <!-- Status Indicator -->
+                                <div style="margin-top: 12px; padding: 10px; background: <?php echo $index_exists ? '#ecf7ed' : '#f0f6fc'; ?>; border-left: 4px solid <?php echo $index_exists ? '#46b450' : '#72aee6'; ?>; border-radius: 2px;">
+                                    <p style="margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <?php if ( $index_exists ) : ?>
+                                            <span class="dashicons dashicons-yes-alt" style="color: #46b450; font-size: 20px;"></span>
+                                            <strong style="color: #046b36;"><?php esc_html_e( 'Index Active', 'pulpcovers-modified-posts-feed' ); ?></strong>
+                                        <?php else : ?>
+                                            <span class="dashicons dashicons-info-outline" style="color: #2271b1; font-size: 20px;"></span>
+                                            <strong style="color: #2271b1;"><?php esc_html_e( 'Index Not Installed', 'pulpcovers-modified-posts-feed' ); ?></strong>
+                                        <?php endif; ?>
+                                    </p>
+                                    
+                                    <?php if ( $status_mismatch ) : ?>
+                                        <p style="margin: 8px 0 0 0; font-size: 12px; color: #646970;">
+                                            <span class="dashicons dashicons-warning" style="color: #dba617; font-size: 16px; vertical-align: middle;"></span>
+                                            <?php
+                                            if ( $index_exists && ! $option_enabled ) {
+                                                esc_html_e( 'Note: Index exists in database but option is disabled. Uncheck and save to remove it.', 'pulpcovers-modified-posts-feed' );
+                                            } else {
+                                                esc_html_e( 'Note: Option is enabled but index is not in database. Save changes to create it.', 'pulpcovers-modified-posts-feed' );
+                                            }
+                                            ?>
+                                        </p>
+                                    <?php endif; ?>
+                                </div>
+                            </fieldset>
                         </td>
                     </tr>
                 </table>

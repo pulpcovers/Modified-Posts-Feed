@@ -8,7 +8,7 @@
 * Author URI: https://pulpcovers.com/
 * License: CC0-1.0
 * Text Domain: pulpcovers-modified-posts-feed
-* Requires at least: 5.0
+* Requires at least: 6.2
 * Requires PHP: 7.4
 * Tested up to: 6.9
 */

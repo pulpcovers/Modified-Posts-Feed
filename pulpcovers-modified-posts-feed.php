@@ -7,6 +7,9 @@
  * Author: Pulpcovers
  * Author URI: https://pulpcovers.com/
  * License: CC0-1.0
+ * Requires at least: 5.0
+ * Requires PHP: 7.0
+ * Tested up to: 6.9
  * Text Domain: pulpcovers-modified-posts-feed
  */
 
@@ -301,13 +304,25 @@ class Pulpcovers_Modified_Posts_Feed {
                 'success'
             );
         } else {
+            // Check if index exists before dropping
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-            $wpdb->query(
+            $index_exists = $wpdb->get_results(
                 $wpdb->prepare(
-                    "ALTER TABLE %i DROP INDEX modified_posts_feed_idx",
-                    $table
+                    "SHOW INDEX FROM %i WHERE Key_name = %s",
+                    $table,
+                    'modified_posts_feed_idx'
                 )
             );
+            
+            if ( ! empty( $index_exists ) ) {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+                $wpdb->query(
+                    $wpdb->prepare(
+                        "ALTER TABLE %i DROP INDEX modified_posts_feed_idx",
+                        $table
+                    )
+                );
+            }
             
             add_settings_error(
                 'modified_posts_feed_messages',

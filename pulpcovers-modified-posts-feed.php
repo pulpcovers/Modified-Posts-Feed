@@ -271,11 +271,29 @@ class Pulpcovers_Modified_Posts_Feed {
 
     public function maybe_update_index( $old, $new ) {
         global $wpdb;
-
         $table = $wpdb->posts;
-
+        
         if ( $new ) {
-            $wpdb->query( "ALTER TABLE $table ADD INDEX modified_posts_feed_idx (post_modified)" );
+            // Check if index already exists before adding
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+            $index_exists = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SHOW INDEX FROM %i WHERE Key_name = %s",
+                    $table,
+                    'modified_posts_feed_idx'
+                )
+            );
+            
+            if ( empty( $index_exists ) ) {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+                $wpdb->query(
+                    $wpdb->prepare(
+                        "ALTER TABLE %i ADD INDEX modified_posts_feed_idx (post_modified)",
+                        $table
+                    )
+                );
+            }
+            
             add_settings_error(
                 'modified_posts_feed_messages',
                 'index_added',
@@ -283,7 +301,14 @@ class Pulpcovers_Modified_Posts_Feed {
                 'success'
             );
         } else {
-            $wpdb->query( "ALTER TABLE $table DROP INDEX modified_posts_feed_idx" );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+            $wpdb->query(
+                $wpdb->prepare(
+                    "ALTER TABLE %i DROP INDEX modified_posts_feed_idx",
+                    $table
+                )
+            );
+            
             add_settings_error(
                 'modified_posts_feed_messages',
                 'index_removed',

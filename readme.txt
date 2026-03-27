@@ -1,6 +1,5 @@
 === Pulpcovers Modified Posts Feed ===
 Contributors: pulpcovers
-Donate link: https://pulpcovers.com
 Tags: rss, feed, modified posts, updated posts, syndication
 Requires at least: 6.2
 Tested up to: 6.9

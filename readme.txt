@@ -4,7 +4,7 @@ Tags: rss, feed, modified posts, updated posts, syndication
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: CC0-1.0
 License URI: https://creativecommons.org/publicdomain/zero/1.0/
 

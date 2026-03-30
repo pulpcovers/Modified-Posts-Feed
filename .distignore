@@ -1,5 +1,9 @@
+# Exclude itself
+.distignore
+
 # GitHub & Git
 .github/
+.git/
 .gitignore
 .gitattributes
 

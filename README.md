@@ -214,6 +214,9 @@ update_option('modified_posts_feed_remove_index_on_uninstall', true);
 
 ## Changelog
 
+### 1.2
+- Added full post content to feed
+  
 ### 1.0.1
 - Added automatic rewrite flush on activation
 - Added manual action buttons to settings page

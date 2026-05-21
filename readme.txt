@@ -32,18 +32,6 @@ All options are configurable via **Settings → Pulpcovers Modified Posts Feed**
 - Feed caching
 - Database index
 
-### Filters
-
-Developers can customize:
-
-- Feed slug  
-- Post types  
-- Post limit  
-- Caching behavior  
-- Featured image output  
-
-See the source code for available filters.
-
 == Installation ==
 
 1. Upload the plugin folder to `/wp-content/plugins/`

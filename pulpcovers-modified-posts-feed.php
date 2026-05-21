@@ -132,6 +132,7 @@ class Pulpcovers_Modified_Posts_Feed {
         echo '<?xml version="1.0" encoding="' . esc_attr( get_option( 'blog_charset' ) ) . '"?>';
         ?>
 <rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
     xmlns:media="http://search.yahoo.com/mrss/"
 >
 <channel>
@@ -151,6 +152,7 @@ class Pulpcovers_Modified_Posts_Feed {
             <pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_modified_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
             <guid isPermaLink="false"><?php the_guid(); ?></guid>
             <description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
+            <content:encoded><![CDATA[<?php the_content_feed( 'rss2' ); ?>]]></content:encoded>
             <?php if ( get_option( 'modified_posts_feed_featured_image', false ) ) : ?>
                 <?php if ( has_post_thumbnail() ) :
                     $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );

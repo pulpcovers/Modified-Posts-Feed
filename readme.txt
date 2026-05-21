@@ -62,6 +62,11 @@ No, but it is recommended for performance, especially on large sites.
 It adds an index on the `post_modified` column to speed up queries.  
 This is optional but recommended for high‑traffic or large‑content sites.
 
+= What happens when the plugin is uninstalled? =
+When the plugin is permanently deleted, all plugin settings, 
+the feed cache, and the database index are automatically removed. 
+Rewrite rules are also flushed.
+
 == Changelog ==
 
 = 1.2 =

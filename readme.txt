@@ -83,11 +83,9 @@ This is optional but recommended for high‑traffic or large‑content sites.
 * Updated WordPress compatibility to 7.0
 
 = 1.0.1 =
-* Added settings page
-* Added optional featured images
-* Added optional caching
-* Added optional database index
-* Improved multisite support
+* Automatic rewrite flush on activation
+* Manual action buttons to settings page
+* Copy-to-clipboard for feed URL
 * Code cleanup and documentation
 
 = 1.0.0 =

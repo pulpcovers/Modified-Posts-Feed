@@ -2,9 +2,9 @@
 Contributors: pulpcovers
 Tags: rss, feed, modified posts, updated posts, syndication
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.2
 License: CC0-1.0
 License URI: https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -33,7 +33,6 @@ The plugin is lightweight, fast, and includes optional caching and database inde
 - Optional caching for performance
 - Optional database index on `post_modified` for large sites
 - Multisite‑compatible
-- Fully customizable via filters
 
 ### Filters
 

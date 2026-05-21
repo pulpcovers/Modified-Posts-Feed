@@ -79,6 +79,10 @@ This is optional but recommended for high‑traffic or large‑content sites.
 
 == Changelog ==
 
+= 1.2 =
+* Added full post content to feed
+* Updated WordPress compatibility to 7.0
+
 = 1.0.1 =
 * Added settings page
 * Added optional featured images
@@ -89,8 +93,3 @@ This is optional but recommended for high‑traffic or large‑content sites.
 
 = 1.0.0 =
 * Initial release
-
-== Upgrade Notice ==
-
-= 1.0.1 =
-Recommended update. Adds settings page, caching, and performance improvements.

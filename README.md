@@ -65,6 +65,14 @@ Configure the plugin at **Settings > Pulpcovers Modified Posts Feed**.
 - Default: Disabled
 - Include featured images using Media RSS format
 
+### Database Index Settings
+
+**Enable Database Index**
+- Default: Disabled
+- Adds an index on the `post_modified` column to improve query performance
+- Recommended for sites with many posts
+- Index is automatically added or removed when the setting is saved
+
 ### Cache Settings
 
 **Enable Caching**

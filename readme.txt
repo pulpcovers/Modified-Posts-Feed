@@ -23,16 +23,14 @@ This is useful for:
 
 The plugin is lightweight, fast, and includes optional caching and database indexing for improved performance on large sites.
 
-### 🔧 Features
-
-- Adds a new RSS feed at:  
-  `https://yoursite.com/feed/modified-posts/`
-- Orders posts by **last modified date (DESC)**
-- Supports custom post types
-- Optional featured images via Media RSS
-- Optional caching for performance
-- Optional database index on `post_modified` for large sites
-- Multisite‑compatible
+### ⚙️ Settings
+All options are configurable via **Settings → Pulpcovers Modified Posts Feed**:
+- Feed URL slug
+- Number of posts
+- Post types to include
+- Featured image output
+- Feed caching
+- Database index
 
 ### Filters
 

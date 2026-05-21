@@ -116,6 +116,11 @@ No. The plugin includes transient caching and database indexing for optimal perf
 
 Go to **Settings > Permalinks** and click "Save Changes" to flush rewrite rules.
 
+**What happens when the plugin is uninstalled?**
+When the plugin is permanently deleted, all plugin settings, 
+the feed cache, and the database index are automatically 
+removed. Rewrite rules are also flushed.
+
 ## Performance
 
 The plugin is optimized for performance:

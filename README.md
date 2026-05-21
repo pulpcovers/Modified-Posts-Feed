@@ -2,7 +2,7 @@
 
 A WordPress plugin that generates an RSS feed of recently modified posts, ordered by last modified date.
 
-[![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-blue.svg)](https://wordpress.org/)
+[![WordPress](https://img.shields.io/badge/WordPress-6.2%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-CC0--1.0-green.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
 
@@ -19,7 +19,6 @@ Ideal for content-focused sites that regularly update existing articles, documen
 - Performance optimized with transient caching and database indexing
 - Multisite compatible
 - Easy configuration via WordPress admin
-- Customizable with filters and actions
 
 ## Installation
 
@@ -42,7 +41,7 @@ After activation, your feed is available at:
 https://yoursite.com/feed/modified-posts
 
 
-Configure the plugin at **Settings > Modified Posts Feed**.
+Configure the plugin at **Settings > Pulpcovers Modified Posts Feed**.
 
 ## Settings Reference
 
@@ -54,57 +53,40 @@ Configure the plugin at **Settings > Modified Posts Feed**.
 - Only lowercase letters, numbers, and hyphens allowed
 
 **Posts Per Page**
-- Default: `50`
-- Range: 1-500
-- Recommended: 50-100
+- Default: `10`
+- Range: 1-100
+- Recommended: 10
 
 **Post Types**
 - Default: `post`
 - Select which content types to include (posts, pages, custom post types)
 
 **Featured Images**
-- Default: Enabled
+- Default: Disabled
 - Include featured images using Media RSS format
 
 ### Cache Settings
 
 **Enable Caching**
-- Default: Enabled
+- Default: Disabled
 - Stores generated feed in WordPress transients
 - Significantly reduces server load
 
 **Cache Duration**
-- Default: `900` seconds (15 minutes)
-- Range: 60-86400 seconds
+- 3600 seconds
 - Cache automatically clears when posts are saved/deleted or settings change
-
-### Database Index Settings
-
-**Add Index on Activation**
-- Default: Enabled
-- Adds database index to `post_modified` column
-- Improves query speed 10-50x
-- Recommended: Keep enabled
-
-**Remove Index on Deactivation**
-- Default: Disabled
-- Removes database index when plugin is deactivated
-
-**Remove Index on Uninstall**
-- Default: Disabled
-- Removes database index when plugin is permanently deleted
 
 ## Feed Format
 
 The plugin generates RSS 2.0 feeds with standard elements plus:
 
-- `<dc:modified>` - Last modified date
+- `<content:encoded>` - Full post content
 - `<media:content>` - Featured image (if enabled)
 - Posts ordered by modification date (newest first)
 
 ## Requirements
 
-- WordPress 5.0 or higher
+- WordPress 6.2 or higher
 - PHP 7.4 or higher
 - MySQL 5.6 or higher
 
@@ -120,15 +102,11 @@ WordPress updates the modification date when post content, title, excerpt, featu
 
 **Will this slow down my site?**
 
-No. The plugin includes transient caching, database indexing, and lazy loading for optimal performance.
+No. The plugin includes transient caching and database indexing for optimal performance.
 
 **Feed shows 404 error**
 
 Go to **Settings > Permalinks** and click "Save Changes" to flush rewrite rules.
-
-**Feed shows old content**
-
-Click "Clear Cache Now" in plugin settings.
 
 ## Performance
 
@@ -136,81 +114,6 @@ The plugin is optimized for performance:
 
 - **Transient Caching:** Stores generated feed to avoid repeated queries
 - **Database Index:** Speeds up queries significantly
-- **Lazy Loading:** Settings only load when needed
-- **HTTP Cache Headers:** Proper `Cache-Control` and `Last-Modified` headers
-
-## Developer Documentation
-
-### Available Filters
-
-**Change feed slug:**
-(php code)
-add_filter('modified_posts_feed_slug', function($slug) {
-    return 'updates';
-});
-(end code)
-
-**Change posts per page:**
-(php code)
-add_filter('modified_posts_feed_limit', function($limit) {
-    return 100;
-});
-(end code)
-
-**Include custom post types:**
-(php code)
-add_filter('modified_posts_feed_post_types', function($post_types) {
-    return array('post', 'page', 'portfolio');
-});
-(end code)
-
-**Disable caching:**
-(php code)
-add_filter('modified_posts_feed_enable_cache', '__return_false');
-(end code)
-
-**Change cache duration:**
-(php code)
-add_filter('modified_posts_feed_cache_duration', function($duration) {
-    return 1800; // 30 minutes
-});
-(end code)
-
-**Toggle featured images:**
-(php code)
-add_filter('modified_posts_feed_show_images', '__return_false');
-(end code)
-
-### Available Actions
-
-**Modify feed query:**
-(php code)
-add_action('modified_posts_feed_query', function($query) {
-    $query->set('category_name', 'news');
-});
-(end code)
-
-**Add custom RSS elements:**
-(php code)
-add_action('rss2_item', function() {
-    echo '<custom:element>Value</custom:element>';
-});
-(end code)
-
-### Database Index Control
-
-Control index behavior programmatically:
-
-(php code)
-// Prevent index creation
-update_option('modified_posts_feed_add_index', false);
-
-// Remove index on deactivation
-update_option('modified_posts_feed_remove_index_on_deactivate', true);
-
-// Remove index on uninstall
-update_option('modified_posts_feed_remove_index_on_uninstall', true);
-(end code)
 
 ## Changelog
 
